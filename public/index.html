@@ -1,10 +1,474 @@
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Mera App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Modern stylish web application deployed on Azure">
+    <meta name="keywords" content="Azure, Node.js, Web App, Modern Design">
+    <meta name="author" content="Hammad Mushtaq">
+    
+    <title>Azure Web App | Modern Design</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#667eea">
 </head>
 <body>
-    <h1>Welcome to My Azure App</h1>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">
+                <i class="fas fa-cloud"></i>
+                <span>AzureWeb</span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="#features" class="nav-link">
+                    <i class="fas fa-star"></i> Features
+                </a>
+                <a href="#dashboard" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <a href="#contact" class="nav-link">
+                    <i class="fas fa-envelope"></i> Contact
+                </a>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">Modern Web App</span>
+                    <br>Deployed on Azure
+                </h1>
+                <p class="hero-subtitle">
+                    A fully responsive, modern web application with real-time dashboard,
+                    API endpoints, and beautiful UI components.
+                </p>
+                
+                <div class="hero-buttons">
+                    <a href="#dashboard" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> Explore Dashboard
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i> Contact Us
+                    </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <i class="fas fa-bolt"></i>
+                        <h3>High Performance</h3>
+                        <p>Optimized for speed</p>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Secure</h3>
+                        <p>Enterprise-grade security</p>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Responsive</h3>
+                        <p>Works on all devices</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <div class="floating-card">
+                    <div class="card-header">
+                        <i class="fas fa-server"></i>
+                        <h4>Live Server Status</h4>
+                    </div>
+                    <div class="card-body" id="serverStatus">
+                        <p><i class="fas fa-sync fa-spin"></i> Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Powerful <span class="gradient-text">Features</span></h2>
+                <p class="section-subtitle">Everything you need for a modern web application</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Fast Performance</h3>
+                    <p>Optimized Node.js server with caching and compression for lightning-fast responses.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure</h3>
+                    <p>Rate limiting, security headers, and input validation to protect your data.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsive Design</h3>
+                    <p>Beautiful UI that works perfectly on desktop, tablet, and mobile devices.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Real-time Dashboard</h3>
+                    <p>Monitor server health, performance metrics, and system statistics in real-time.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3>REST API</h3>
+                    <p>Complete RESTful API with JSON responses for integration with other services.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h3>Azure Ready</h3>
+                    <p>Optimized for Azure deployment with proper configuration and scaling.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard" id="dashboard">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Live <span class="gradient-text">Dashboard</span></h2>
+                <p class="section-subtitle">Monitor your application in real-time</p>
+            </div>
+            
+            <div class="dashboard-grid">
+                <!-- Server Info Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <i class="fas fa-server"></i>
+                        <h3>Server Information</h3>
+                        <button class="refresh-btn" id="refreshServer">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-item">
+                            <span class="label">Status:</span>
+                            <span class="value" id="serverStatusText">Checking...</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Uptime:</span>
+                            <span class="value" id="serverUptime">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Environment:</span>
+                            <span class="value" id="serverEnv">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Node Version:</span>
+                            <span class="value" id="nodeVersion">--</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- System Stats Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>System Statistics</h3>
+                        <button class="refresh-btn" id="refreshSystem">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="stat-meter">
+                            <div class="meter-label">Memory Usage</div>
+                            <div class="meter-bar">
+                                <div class="meter-fill" id="memoryBar" style="width: 0%"></div>
+                            </div>
+                            <div class="meter-value" id="memoryValue">0%</div>
+                        </div>
+                        
+                        <div class="stat-meter">
+                            <div class="meter-label">CPU Usage</div>
+                            <div class="meter-bar">
+                                <div class="meter-fill" id="cpuBar" style="width: 0%"></div>
+                            </div>
+                            <div class="meter-value" id="cpuValue">0%</div>
+                        </div>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-number" id="heapUsed">--</div>
+                                <div class="stat-label">Heap Used</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" id="heapTotal">--</div>
+                                <div class="stat-label">Heap Total</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Daily Quote Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <i class="fas fa-quote-left"></i>
+                        <h3>Daily Inspiration</h3>
+                        <button class="refresh-btn" id="refreshQuote">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="quote-content">
+                            <i class="fas fa-quote-left quote-icon"></i>
+                            <p class="quote-text" id="quoteText">Click refresh to get an inspiring quote!</p>
+                            <i class="fas fa-quote-right quote-icon"></i>
+                        </div>
+                        <div class="quote-author" id="quoteAuthor"></div>
+                    </div>
+                </div>
+                
+                <!-- API Endpoints Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <i class="fas fa-code"></i>
+                        <h3>API Endpoints</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="api-endpoint">
+                            <code>GET /api/health</code>
+                            <span class="endpoint-desc">Server health check</span>
+                        </div>
+                        <div class="api-endpoint">
+                            <code>GET /api/system</code>
+                            <span class="endpoint-desc">System information</span>
+                        </div>
+                        <div class="api-endpoint">
+                            <code>GET /api/quote</code>
+                            <span class="endpoint-desc">Random inspirational quote</span>
+                        </div>
+                        <div class="api-endpoint">
+                            <code>POST /api/contact</code>
+                            <span class="endpoint-desc">Contact form submission</span>
+                        </div>
+                        
+                        <div class="api-test">
+                            <button class="btn btn-small" id="testApi">
+                                <i class="fas fa-vial"></i> Test API
+                            </button>
+                            <div class="api-result" id="apiResult"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2 class="section-title">Get In <span class="gradient-text">Touch</span></h2>
+                    <p class="contact-subtitle">Have questions? We'd love to hear from you.</p>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email Us</h4>
+                                <p>contact@azurewebapp.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Call Us</h4>
+                                <p>+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Visit Us</h4>
+                                <p>123 Azure Street, Cloud City</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">
+                                <i class="fas fa-user"></i> Full Name
+                            </label>
+                            <input type="text" id="name" name="name" required 
+                                   placeholder="Enter your name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">
+                                <i class="fas fa-envelope"></i> Email Address
+                            </label>
+                            <input type="email" id="email" name="email" required 
+                                   placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">
+                                <i class="fas fa-comment"></i> Message
+                            </label>
+                            <textarea id="message" name="message" rows="4" required 
+                                      placeholder="Type your message here..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                        
+                        <div class="form-result" id="formResult"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="/" class="logo">
+                        <i class="fas fa-cloud"></i>
+                        <span>AzureWeb</span>
+                    </a>
+                    <p class="footer-description">
+                        A modern web application demonstrating Azure deployment,
+                        responsive design, and real-time features.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">GitHub Repository</a></li>
+                        <li><a href="#">Azure Portal</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Deployment Info</h4>
+                    <div class="deployment-info">
+                        <div class="info-item">
+                            <span class="label">Status:</span>
+                            <span class="value" id="footerStatus">Online</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Version:</span>
+                            <span class="value">2.0.0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Last Updated:</span>
+                            <span class="value" id="currentDate">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Azure Web Application. All rights reserved.</p>
+                <p>Deployed on Microsoft Azure with ❤️ by Hammad Mushtaq</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span class="toast-message">Operation successful!</span>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>

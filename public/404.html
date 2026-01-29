@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .error-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .error-content {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+        
+        .error-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        
+        .error-message {
+            color: #718096;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .error-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        
+        .astronaut {
+            margin-top: 40px;
+            font-size: 4rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-content">
+            <div class="error-code">404</div>
+            <h1 class="error-title">Page Lost in Space</h1>
+            <p class="error-message">
+                Oops! The page you're looking for seems to have drifted off into the digital cosmos.
+                Don't worry, our team of developer astronauts is on the case!
+            </p>
+            
+            <div class="error-actions">
+                <a href="/" class="btn btn-primary error-link">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+                <a href="/#dashboard" class="btn btn-secondary error-link">
+                    <i class="fas fa-chart-line"></i> Go to Dashboard
+                </a>
+                <button onclick="history.back()" class="btn btn-secondary error-link">
+                    <i class="fas fa-arrow-left"></i> Go Back
+                </button>
+            </div>
+            
+            <div class="astronaut">
+                <i class="fas fa-user-astronaut"></i>
+            </div>
+            
+            <p style="margin-top: 30px; color: #a0aec0; font-size: 0.9rem;">
+                If you believe this is an error, please contact our support team.
+            </p>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

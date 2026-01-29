@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -8,170 +9,138 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Rate limiting middleware
+const rateLimit = require('express-rate-limit');
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+    message: 'Too many requests from this IP, please try again later.'
+});
+app.use('/api/', limiter);
+
+// Security headers middleware
+app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    next();
+});
 
 // Routes
 app.get('/', (req, res) => {
-    res.send(`
-        <!DOCTYPE html>
-        <html lang="ur">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Mera Web Application</title>
-            <style>
-                body {
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                    text-align: center;
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    color: white;
-                    min-height: 100vh;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    padding: 20px;
-                }
-                .container {
-                    background: rgba(255, 255, 255, 0.1);
-                    backdrop-filter: blur(10px);
-                    border-radius: 20px;
-                    padding: 40px;
-                    max-width: 800px;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                }
-                h1 {
-                    font-size: 2.8rem;
-                    margin-bottom: 20px;
-                    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-                }
-                h2 {
-                    font-size: 2rem;
-                    margin: 30px 0 15px;
-                    color: #ffd700;
-                }
-                p {
-                    font-size: 1.2rem;
-                    line-height: 1.6;
-                    margin-bottom: 20px;
-                }
-                .steps {
-                    text-align: left;
-                    background: rgba(255, 255, 255, 0.15);
-                    padding: 25px;
-                    border-radius: 15px;
-                    margin: 25px 0;
-                }
-                .step {
-                    margin: 15px 0;
-                    padding-left: 20px;
-                    border-left: 3px solid #ffd700;
-                }
-                .success-box {
-                    background: rgba(46, 204, 113, 0.2);
-                    border: 2px solid #2ecc71;
-                    padding: 20px;
-                    border-radius: 10px;
-                    margin-top: 30px;
-                }
-                .urdu-text {
-                    font-family: 'Jameel Noori Nastaleeq', 'Urdu Typesetting', sans-serif;
-                    font-size: 1.5rem;
-                    direction: rtl;
-                    color: #e6e6e6;
-                }
-                .info-box {
-                    background: rgba(52, 152, 219, 0.2);
-                    border: 2px solid #3498db;
-                    padding: 15px;
-                    border-radius: 10px;
-                    margin: 15px 0;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <h1>🎉 Mera Web Application</h1>
-                <p class="urdu-text">آپ کا ویب ایپلیکیشن کامیابی سے چل رہا ہے!</p>
-                
-                <div class="info-box">
-                    <h2>🌐 Deployment Information</h2>
-                    <p><strong>Server Status:</strong> ✅ Running</p>
-                    <p><strong>Port:</strong> ${PORT}</p>
-                    <p><strong>Environment:</strong> ${process.env.NODE_ENV || 'Development'}</p>
-                </div>
-
-                <h2>📋 Azure Deployment Steps</h2>
-                <div class="steps">
-                    <div class="step">
-                        <strong>Step 1:</strong> Git repository initialize karein
-                    </div>
-                    <div class="step">
-                        <strong>Step 2:</strong> Azure CLI install karein
-                    </div>
-                    <div class="step">
-                        <strong>Step 3:</strong> Azure mein login karein
-                    </div>
-                    <div class="step">
-                        <strong>Step 4:</strong> Web App create karein
-                    </div>
-                    <div class="step">
-                        <strong>Step 5:</strong> Code deploy karein
-                    </div>
-                </div>
-
-                <div class="success-box">
-                    <h2>✅ Successful Deployment</h2>
-                    <p class="urdu-text">مبارک ہو! آپ کا ایپلیکیشن Azure پر ڈپلائی ہو گیا ہے۔</p>
-                    <p>🎯 Node.js Version: ${process.version}</p>
-                    <p>📊 Server Uptime: ${Math.floor(process.uptime())} seconds</p>
-                </div>
-
-                <div style="margin-top: 40px;">
-                    <h3>🔗 Important Links</h3>
-                    <p style="word-break: break-all;">
-                        <strong>API Endpoints:</strong><br>
-                        /api/health - Server health check<br>
-                        /api/time - Current server time
-                    </p>
-                </div>
-            </div>
-        </body>
-        </html>
-    `);
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// API Routes
 app.get('/api/health', (req, res) => {
     res.json({
         status: 'healthy',
+        server: 'Azure Node.js Web App',
+        version: '2.0.0',
         timestamp: new Date().toISOString(),
-        server: 'Node.js Web App',
-        version: '1.0.0'
+        uptime: process.uptime(),
+        environment: process.env.NODE_ENV || 'development'
     });
 });
 
-app.get('/api/time', (req, res) => {
+app.get('/api/system', (req, res) => {
     res.json({
-        serverTime: new Date().toLocaleString(),
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        timestamp: Date.now()
+        nodeVersion: process.version,
+        platform: process.platform,
+        memoryUsage: process.memoryUsage(),
+        cpuUsage: process.cpuUsage()
     });
 });
 
-// Error Handling Middleware
+app.get('/api/quote', (req, res) => {
+    const quotes = [
+        "The only way to do great work is to love what you do. - Steve Jobs",
+        "Innovation distinguishes between a leader and a follower. - Steve Jobs",
+        "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
+        "Strive not to be a success, but rather to be of value. - Albert Einstein",
+        "The best time to plant a tree was 20 years ago. The second best time is now. - Chinese Proverb",
+        "Your time is limited, don't waste it living someone else's life. - Steve Jobs",
+        "The purpose of our lives is to be happy. - Dalai Lama",
+        "Life is what happens to you while you're busy making other plans. - John Lennon"
+    ];
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    res.json({ quote: randomQuote });
+});
+
+// Contact form endpoint
+app.post('/api/contact', (req, res) => {
+    const { name, email, message } = req.body;
+    
+    if (!name || !email || !message) {
+        return res.status(400).json({ 
+            success: false, 
+            message: 'All fields are required' 
+        });
+    }
+    
+    // In production, you would save to database or send email
+    console.log(`Contact form submission: ${name} (${email}): ${message}`);
+    
+    res.json({ 
+        success: true, 
+        message: 'Message received successfully!',
+        data: { name, email, message }
+    });
+});
+
+// 404 handler for API routes
+app.use('/api/*', (req, res) => {
+    res.status(404).json({ 
+        success: false, 
+        message: 'API endpoint not found',
+        availableEndpoints: ['/api/health', '/api/system', '/api/quote', '/api/contact']
+    });
+});
+
+// 404 handler for all other routes
+app.use((req, res) => {
+    res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+});
+
+// Global error handler
 app.use((err, req, res, next) => {
-    console.error(err.stack);
+    console.error('Server Error:', err.stack);
     res.status(500).json({
-        error: 'Something went wrong!',
-        message: process.env.NODE_ENV === 'development' ? err.message : undefined
+        success: false,
+        message: 'Internal Server Error',
+        error: process.env.NODE_ENV === 'development' ? err.message : undefined
     });
 });
 
-// Start Server
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-    console.log(`📁 Environment: ${process.env.NODE_ENV || 'development'}`);
-    console.log(`🔗 Local URL: http://localhost:${PORT}`);
-    console.log(`🌐 Network URL: http://YOUR_IP:${PORT}`);
+// Start server
+const server = app.listen(PORT, () => {
+    console.log(`
+    🚀 Server is running!
+    🔗 Local: http://localhost:${PORT}
+    🌐 Environment: ${process.env.NODE_ENV || 'development'}
+    📅 Started: ${new Date().toLocaleString()}
+    🖥️  PID: ${process.pid}
+    `);
 });
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+    console.log('SIGTERM signal received: closing HTTP server');
+    server.close(() => {
+        console.log('HTTP server closed');
+        process.exit(0);
+    });
+});
+
+process.on('SIGINT', () => {
+    console.log('SIGINT signal received: closing HTTP server');
+    server.close(() => {
+        console.log('HTTP server closed');
+        process.exit(0);
+    });
+});
+
+module.exports = app;
